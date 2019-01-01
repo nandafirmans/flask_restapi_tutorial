@@ -1,14 +1,14 @@
+import os
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
-
 from security import authenticate, identity
 from resources.user import UserResource
 from resources.item import ItemResource, ItemListResource
 from resources.store import StoreResource, StoreListResource
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///data.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = "nanda"
 jwt = JWT(app, authenticate, identity)
