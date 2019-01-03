@@ -30,12 +30,12 @@ class ItemResource(Resource):
         data = ItemResource.req_parser.parse_args()
         try:
             if ItemModel.get_by(name):
-                return {"message": f"An item with name '{name}' already exist"}, 400
+                return {"message": "An item with name '{0}' already exist".format(name)}, 400
             ItemModel(name, **data).save()
             return {"message": "item created successfully"}, 201
         except Exception as err:
             stack_trace = traceback.format_tb(err.__traceback__)
-            return {"message": f"an error occurred | {str(err)} | {stack_trace}"}, 500
+            return {"message": "some error occurred | {0} | {1}".format(str(err), stack_trace)}, 500
 
     @jwt_required()
     def delete(self, name):
@@ -47,7 +47,7 @@ class ItemResource(Resource):
             return {"messages": "item deleted"}, 200
         except Exception as err:
             stack_trace = traceback.format_tb(err.__traceback__)
-            return {"message": f"an error occurred | {str(err)} | {stack_trace}"}, 500
+            return {"message": "some error occurred | {0} | {1}".format(str(err), stack_trace)}, 500
 
     @jwt_required()
     def put(self, name):
@@ -64,7 +64,7 @@ class ItemResource(Resource):
             return {"message": "item updated successfully"}, 201
         except Exception as err:
             stack_trace = traceback.format_tb(err.__traceback__)
-            return {"message": f"an error occurred | {str(err)} | {stack_trace}"}, 500
+            return {"message": "some error occurred | {0} | {1}".format(str(err), stack_trace)}, 500
 
 
 class ItemListResource(Resource):

@@ -18,12 +18,12 @@ class StoreResource(Resource):
     def post(self, name):
         try:
             if StoreModel.get_by(name):
-                return {"message": f"An store with name '{name}' already exist"}, 400
+                return {"message": "An store with name '{0}' already exist".format(name)}, 400
             StoreModel(name).save()
             return {"message": "store created successfully"}, 201
         except Exception as err:
             stack_trace = traceback.format_tb(err.__traceback__)
-            return {"message": f"an error occurred | {str(err)} | {stack_trace}"}, 500
+            return {"message": "some error occurred | {0} | {1}".format(str(err), stack_trace)}, 500
 
     @jwt_required()
     def delete(self, name):
@@ -35,7 +35,7 @@ class StoreResource(Resource):
             return {"messages": "store deleted"}, 200
         except Exception as err:
             stack_trace = traceback.format_tb(err.__traceback__)
-            return {"message": f"an error occurred | {str(err)} | {stack_trace}"}, 500
+            return {"message": "some error occurred | {0} | {1}".format(str(err), stack_trace)}, 500
 
 
 class StoreListResource(Resource):

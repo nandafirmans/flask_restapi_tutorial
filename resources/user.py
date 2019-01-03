@@ -27,9 +27,9 @@ class UserResource(Resource):
         try:
             username = data["username"]
             if UserModel.get_by(username=username):
-                return {"message": f"username '{username}' is already used"}, 400
+                return {"message": "username '{0}' is already used".format(username)}, 400
             UserModel(**data).save()
             return {"message": "user created successfully"}, 201
         except Exception as err:
             stack_trace = traceback.format_tb(err.__traceback__)
-            return {"message": f"some error occurred | {str(err)} | {stack_trace}"}, 500
+            return {"message": "some error occurred | {0} | {1}".format(str(err), stack_trace)}, 500
